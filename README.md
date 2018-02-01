@@ -19,6 +19,14 @@ data class DbConnectionConfig(
 ) : FastConfig()
 ```
 
+```properties
+# db.properties
+port=1234
+database=data
+username=paul
+password=verysecretpassword
+```
+
 ```kotlin
 // Loading
 val config = FastConfig.loadFromFile(DbConnectionConfig::class, "db.properties")

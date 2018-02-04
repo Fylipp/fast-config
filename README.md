@@ -42,7 +42,7 @@ Since **fast-config** is served via [JitPack](https://jitpack.io) a custom repos
 <dependency>
     <groupId>com.github.Fylipp</groupId>
     <artifactId>fast-config</artifactId>
-    <version>v1.0.0</version>
+    <version>v1.0.1</version>
 </dependency>
 ```
 

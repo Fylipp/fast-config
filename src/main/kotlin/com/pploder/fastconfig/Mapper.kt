@@ -27,7 +27,9 @@ val simpleMappers = mapOf<KClass<*>, SimpleMapper<*>>(
         Double::class to DoubleMapper()
 )
 
-val mappers = mapOf<KClass<*>, Mapper<*>>() + simpleMappers
+val mappers = mapOf<KClass<*>, Mapper<*>>(
+        Map::class to MapMapper()
+) + simpleMappers
 
 fun <T> write(value: T, props: Properties, prop: KProperty<T>) {
     val propType = prop.returnType.jvmErasure

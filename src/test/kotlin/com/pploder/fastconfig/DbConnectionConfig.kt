@@ -6,5 +6,6 @@ data class DbConnectionConfig(
         val database: String,
         val username: String = "root",
         val password: String,
-        val customSettings: Map<String, String>
+        val vendorSettings: Map<String, String>,
+        val ignoredErrorCodes: List<Int>
 ) : FastConfig()

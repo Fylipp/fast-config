@@ -14,8 +14,9 @@ open class DbConnectionConfigTest {
         assertEquals("paul", "paul")
         assertEquals("verysecretpassword", config.password)
         assertEquals(mapOf(
-                "firstCustomSetting" to "123",
-                "secondCustomSetting" to "testtest"
-        ), config.customSettings)
+                "ssl" to "true",
+                "timeout" to "10"
+        ), config.vendorSettings)
+        assertEquals(listOf(12, 23, 45), config.ignoredErrorCodes)
     }
 }

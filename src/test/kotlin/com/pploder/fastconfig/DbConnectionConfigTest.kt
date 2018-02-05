@@ -13,5 +13,9 @@ open class DbConnectionConfigTest {
         assertEquals("data", config.database)
         assertEquals("paul", "paul")
         assertEquals("verysecretpassword", config.password)
+        assertEquals(mapOf(
+                "firstCustomSetting" to "123",
+                "secondCustomSetting" to "testtest"
+        ), config.customSettings)
     }
 }

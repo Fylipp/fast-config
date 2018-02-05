@@ -5,5 +5,6 @@ data class DbConnectionConfig(
         val port: Int,
         val database: String,
         val username: String = "root",
-        val password: String
+        val password: String,
+        val customSettings: Map<String, String>
 ) : FastConfig()

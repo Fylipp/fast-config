@@ -5,8 +5,8 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KParameter
 import kotlin.reflect.KProperty
 
-abstract class OneToOneMapper<T> : Mapper<T> {
-    override fun read(props: Properties, param: KParameter, mappers: Map<KClass<*>, OneToOneMapper<*>>): MappedArgument<T> {
+abstract class SimpleMapper<T> : Mapper<T> {
+    override fun read(props: Properties, param: KParameter, mappers: Map<KClass<*>, SimpleMapper<*>>): MappedArgument<T> {
         val value = props.getProperty(param.name)
 
         return if (value == null) {
@@ -17,7 +17,7 @@ abstract class OneToOneMapper<T> : Mapper<T> {
         }
     }
 
-    override fun write(props: Properties, value: T, prop: KProperty<T>, mappers: Map<KClass<*>, OneToOneMapper<*>>) {
+    override fun write(props: Properties, value: T, prop: KProperty<T>, mappers: Map<KClass<*>, SimpleMapper<*>>) {
         props.setProperty(prop.name, serialize(value))
     }
 

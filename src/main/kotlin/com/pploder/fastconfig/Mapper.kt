@@ -8,8 +8,8 @@ import kotlin.reflect.KProperty
 import kotlin.reflect.jvm.jvmErasure
 
 interface Mapper<T> {
-    fun read(props: Properties, param: KParameter, mappers: Map<KClass<*>, OneToOneMapper<*>>): MappedArgument<T>
-    fun write(props: Properties, value: T, prop: KProperty<T>, mappers: Map<KClass<*>, OneToOneMapper<*>>)
+    fun read(props: Properties, param: KParameter, mappers: Map<KClass<*>, SimpleMapper<*>>): MappedArgument<T>
+    fun write(props: Properties, value: T, prop: KProperty<T>, mappers: Map<KClass<*>, SimpleMapper<*>>)
 }
 
 sealed class MappedArgument<T> {
@@ -17,7 +17,7 @@ sealed class MappedArgument<T> {
     class None<T> : MappedArgument<T>()
 }
 
-val simpleMappers = mapOf<KClass<*>, OneToOneMapper<*>>(
+val simpleMappers = mapOf<KClass<*>, SimpleMapper<*>>(
         String::class to StringMapper(),
         Char::class to CharMapper(),
         Boolean::class to BooleanMapper(),

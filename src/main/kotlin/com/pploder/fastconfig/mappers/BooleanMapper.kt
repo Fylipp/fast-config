@@ -1,9 +1,9 @@
 package com.pploder.fastconfig.mappers
 
 import com.pploder.fastconfig.FastConfigException
-import com.pploder.fastconfig.OneToOneMapper
+import com.pploder.fastconfig.SimpleMapper
 
-class BooleanMapper : OneToOneMapper<Boolean>() {
+class BooleanMapper : SimpleMapper<Boolean>() {
     override fun serialize(t: Boolean): String = t.toString()
     override fun deserialize(s: String): Boolean = when (s.trim().toLowerCase()) {
         in listOf("true", "yes", "on", "1") -> true

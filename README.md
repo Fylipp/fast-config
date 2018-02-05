@@ -7,6 +7,7 @@ but rather to allow for quick setup of basic configuration files and a convenien
 yet minimal API.
 
 Supported types: `String`, `Boolean`, `Int`, `Long`, `Float`, `Double`, `Char`
+and single-level `List` and `Map`.
 
 ## Example
 ```kotlin
@@ -15,7 +16,9 @@ data class DbConnectionConfig(
         val port: Int,
         val database: String,
         val username: String = "root",
-        val password: String
+        val password: String,
+        val vendorSettings: Map<String, String>,
+        val ignoredErrorCodes: List<Int>
 ) : FastConfig()
 ```
 
@@ -25,6 +28,9 @@ port=1234
 database=data
 username=paul
 password=verysecretpassword
+vendorSettings.ssl=true
+vendorSettings.timeout=10
+ignoredErrorCodes=12,23,45
 ```
 
 ```kotlin
@@ -42,7 +48,7 @@ Since **fast-config** is served via [JitPack](https://jitpack.io) a custom repos
 <dependency>
     <groupId>com.github.Fylipp</groupId>
     <artifactId>fast-config</artifactId>
-    <version>v1.0.1</version>
+    <version>v1.1.0</version>
 </dependency>
 ```
 

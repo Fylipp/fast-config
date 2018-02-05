@@ -1,11 +1,13 @@
 package com.pploder.fastconfig
 
+import java.util.*
 import kotlin.reflect.KClass
-import kotlin.reflect.KType
+import kotlin.reflect.KParameter
+import kotlin.reflect.KProperty
 
 abstract class SimpleMapper<T> : Mapper<T> {
-    override fun read(props: Map<String, String>, paramName: String, paramType: KType, mappers: Map<KClass<*>, Mapper<*>>): MappedArgument<T> {
-        val value = props[paramName]
+    override fun read(props: Properties, param: KParameter, mappers: Map<KClass<*>, SimpleMapper<*>>): MappedArgument<T> {
+        val value = props.getProperty(param.name)
 
         return if (value == null) {
             MappedArgument.None()
@@ -15,8 +17,8 @@ abstract class SimpleMapper<T> : Mapper<T> {
         }
     }
 
-    override fun write(props: MutableMap<String, String>, value: T, propName: String, propType: KType, mappers: Map<KClass<*>, Mapper<*>>) {
-        props[propName] = serialize(value)
+    override fun write(props: Properties, value: T, prop: KProperty<T>, mappers: Map<KClass<*>, SimpleMapper<*>>) {
+        props.setProperty(prop.name, serialize(value))
     }
 
     abstract fun serialize(value: T): String

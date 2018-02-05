@@ -28,7 +28,8 @@ val simpleMappers = mapOf<KClass<*>, SimpleMapper<*>>(
 )
 
 val mappers = mapOf<KClass<*>, Mapper<*>>(
-        Map::class to MapMapper()
+        Map::class to MapMapper(),
+        List::class to ListMapper()
 ) + simpleMappers
 
 fun <T> write(value: T, props: Properties, prop: KProperty<T>) {

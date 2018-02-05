@@ -8,8 +8,8 @@ import kotlin.reflect.KProperty
 import kotlin.reflect.jvm.jvmErasure
 
 interface Mapper<T> {
-    fun read(props: Properties, param: KParameter): MappedArgument<T>
-    fun write(props: Properties, value: T, prop: KProperty<T>)
+    fun read(props: Properties, param: KParameter, mappers: Map<KClass<*>, OneToOneMapper<*>>): MappedArgument<T>
+    fun write(props: Properties, value: T, prop: KProperty<T>, mappers: Map<KClass<*>, OneToOneMapper<*>>)
 }
 
 sealed class MappedArgument<T> {
@@ -17,7 +17,7 @@ sealed class MappedArgument<T> {
     class None<T> : MappedArgument<T>()
 }
 
-val mappers = mapOf<KClass<*>, Mapper<*>>(
+val simpleMappers = mapOf<KClass<*>, OneToOneMapper<*>>(
         String::class to StringMapper(),
         Char::class to CharMapper(),
         Boolean::class to BooleanMapper(),
@@ -27,6 +27,8 @@ val mappers = mapOf<KClass<*>, Mapper<*>>(
         Double::class to DoubleMapper()
 )
 
+val mappers = mapOf<KClass<*>, Mapper<*>>() + simpleMappers
+
 fun <T> write(value: T, props: Properties, prop: KProperty<T>) {
     val propType = prop.returnType.jvmErasure
     val mapper = mappers[propType]
@@ -35,7 +37,7 @@ fun <T> write(value: T, props: Properties, prop: KProperty<T>) {
         throw FastConfigException("No serializer available for type: $propType")
     } else {
         @Suppress("UNCHECKED_CAST")
-        (mapper as Mapper<T>).write(props, value, prop)
+        (mapper as Mapper<T>).write(props, value, prop, simpleMappers)
     }
 }
 
@@ -47,6 +49,6 @@ fun <T> read(props: Properties, param: KParameter): MappedArgument<T> {
         throw FastConfigException("No deserializer available for type: $propType")
     } else {
         @Suppress("UNCHECKED_CAST")
-        return (mapper as Mapper<T>).read(props, param)
+        return (mapper as Mapper<T>).read(props, param, simpleMappers)
     }
 }
